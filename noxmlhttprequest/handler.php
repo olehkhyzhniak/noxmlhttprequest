@@ -61,7 +61,7 @@ if (!empty($_GET['t']) && $_GET['t'] == 'iframe') {
                     . $_GET['username'] . ' (' . $_GET['email'] . ') have been processed successfully" style="width:550px;"/></p>'
                 . '<p>Response status:<br/><input type="text" name="status" id="status" value="ok" /></p>'
                 /**
-                 * cross origin messaging with "*"
+                 * cross origin messaging with "*" | should be defined with exact URL for security reasons
                  */
                 . '<script type="text/javascript">parent.postMessage(JSON.stringify(' . $messageToParentWindow . '), "*");</script>'//
             . "</body>" 
@@ -80,6 +80,11 @@ if (!empty($_SERVER['CONTENT_TYPE']) && $_SERVER['CONTENT_TYPE'] == 'application
      */
     $content = json_decode($rawContent);   
     header('Content-Type: application/json');
+    /*
+     * cross origin with "*" | should be defined with exact URL for security reasons
+     */
+    header('Access-Control-Allow-Origin: *');
+    
     if (isset($content->username)) {        
         echo json_encode(
             [

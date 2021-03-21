@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             } 
 
             let invoker = new NoXMLHTTPRequestInvoker(username, email);    
-            invoker.makeRequest(this.getAttribute('name'));
+            invoker.doRequest(this.getAttribute('name'));
         },false);
     });
     
@@ -51,10 +51,10 @@ class NoXMLHTTPRequestInvoker
     }
     
     /**
-    * Make request base on type
+    * Run request base on type
     * @return {null} Directs output to the page
     */
-    makeRequest(type)
+    doRequest(type)
     {
         //Ordinary form submit
         if (type === 'formsubmit') {
@@ -107,7 +107,7 @@ class NoXMLHTTPRequestInvoker
             var email_ = this.email;
             var username_ = this.username;
             fetch('/noxmlhttprequest/handler.php?t=fetchAPI', {
-                method: 'POST',            
+                method: 'POST',
                 mode: 'cors',
                 body: JSON.stringify({
                     "username": email_,
